@@ -1,0 +1,51 @@
+
+*{
+    padding: 0;
+    margin: 0;
+}
+img{
+
+    height: 4em;
+    width: 4em;
+
+}
+body{
+
+    height: 100vh;
+    background-color: whitesmoke;
+
+}
+#link img{
+
+    filter: grayscale(1);
+    transition: 300ms;
+    height: 2em;
+    width: 2em;
+
+}
+#link img:hover{
+
+    filter: grayscale(0);
+    transition: 300ms;
+
+}
+#insta img{
+
+    filter: grayscale(1);
+    transition: 300ms;
+    height: 2em;
+    width: 2em;
+
+
+}
+#insta img:hover{
+
+    filter: grayscale(0);
+    transition: 300ms;
+
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
