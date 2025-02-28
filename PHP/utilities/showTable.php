@@ -1,8 +1,21 @@
 <?php
 
-    include "mysqlconecta.php";
+  include "mysqlconecta.php";
 
-  $query = mysqli_query($conexao,"SELECT * from usuario");
+  $search = $_POST["search"];
+  $column = $_POST["column"];
+
+  function fixPhone($tel){
+
+    $DDD = substr($tel,0,2);
+    $num = substr($tel,2, 5);
+    $ber = substr($tel,7, 4);
+    
+    return "($DDD) $num-$ber" ;
+
+  }
+
+  $query = mysqli_query($conexao,"SELECT * from usuario where $column LIKE '%$search%' ");
 
   while($row = mysqli_fetch_array($query)) {
   
@@ -16,7 +29,7 @@
     echo  "</td>";
     
     echo "<td class=' vertical-alig'>";
-    echo "$row[3]";
+    echo fixPhone($row[3]) ;
     echo  "</td>";
 
     echo "<td class='d-flex justify-content-evenly align-center w-100' >";

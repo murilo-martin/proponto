@@ -26,9 +26,9 @@
         <div class="col">
           <div class="mb-3">
             <label for="tel" class="col-form-label fw-bold">Telefone:</label>
-            <input type="text" value="'.$row[1].'" class="form-control" id="tel_'.$acao.'" placeholder="(XX)XXXXX-XXXX" '.$disabled.'>
+            <input type="text" value="'.$row[1].'" class="form-control tel" id="tel_'.$acao.'" placeholder="(XX)XXXXX-XXXX" '.$disabled.'>
           </div>
-          <input type="hidden" id="id_usuario" value='.$id.'>
+          <input type="hidden" id="id_usuario'.$acao.'" value='.$id.'>
         </div>
       </div>';
     

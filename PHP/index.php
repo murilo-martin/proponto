@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-bs-theme="dark">
+<html lang="pt-br" class="h-100" data-bs-theme="dark">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../CSS/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -22,19 +19,22 @@
     </div>
   </nav>
 
-  <div class=" w-100 d-flex justify-content-around align-center">
+  <div class=" w-100 d-flex justify-content-around align-center bg-light">
 
-    <!-- <div class="col">
-      <select class="form-select" id='estado' aria-label="Default select example" oninput="table('searchbar')">
-        <option value="todos" selected>Todos</option>
-        <option value="falta">Em falta</option>
-        <option value="em_estoque">Em estoque</option>
+    <!-- filter -->
+    <div class="input-group w-25 p-3 bg-light">
+      <select class="form-select fw-bold" id='column' aria-label="Default select example"
+        oninput="showTable('searchbar')">
+        <option value="name" class="fw-bold" selected>Nome</option>
+        <option value="email" class="fw-bold">Email</option>
+        <option value="telefone" class="fw-bold">Telefone</option>
       </select>
-    </div> -->
+    </div>
 
-    <div class="input-group w-25 p-3">
+    <!-- Search -->
+    <div class="input-group w-25 p-3 fw-bold ">
       <input class="form-control" type="text" placeholder="Pesquisar..." id='searchbar'
-        aria-label="default input example" oninput="showTable('searchbar')">
+        aria-label="default input example" oninput="showTable('searchbar')" value="">
       <span class="input-group-text" id="inputGroup-sizing-default">
         <i class="bi bi-search"></i>
       </span>
@@ -78,7 +78,7 @@
               <div class="col">
                 <div class="mb-3">
                   <label for="tel" class="col-form-label fw-bold">Telefone:</label>
-                  <input type="text" class="form-control" id="tel" placeholder="(XX)XXXXX-XXXX" required>
+                  <input type="text" class="form-control tel" id="tel" placeholder="(XX)XXXXX-XXXX" required>
                 </div>
               </div>
             </div>
@@ -89,7 +89,43 @@
         </form>
       </div>
     </div>
+    <div class="toast align-items-center text-dark border-0 position-absolute top-0 bg-warning end-0 m-4" role="alert"
+      aria-live="assertive" id="toastExist" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
+      <div class="d-flex">
+        <div class="toast-body fw-bold">
+          Registro já encontrado em nosso banco
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
   </div>
+  <div class="toast align-items-center text-light bg-danger border-0 position-absolute top-0 bg-success end-0 m-4"
+    role="alert" aria-live="assertive" id="toastDanger" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
+    <div class="d-flex">
+      <div class="toast-body fw-bold">
+        Complete todos os inputs
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+  </div>
+
+  <div class="toast align-items-center text-light border-0 position-absolute top-0 bg-success end-0 m-4" role="alert"
+    aria-live="assertive" id="toastSuccess" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
+    <div class="d-flex">
+      <div class="toast-body fw-bold">
+        Registro feito com sucesso
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+  </div>
+
+
+
   <!-- Modal de deletar -->
   <div class="modal fade" id="modal_del" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     data-bs-theme="dark">
@@ -108,6 +144,16 @@
           </div>
         </form>
       </div>
+    </div>
+  </div>
+  <div class="toast align-items-center text-light border-0 position-absolute top-0 bg-danger end-0 m-4" role="alert"
+    aria-live="assertive" id="toastDel" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
+    <div class="d-flex">
+      <div class="toast-body fw-bold">
+        Registro deletado com successo
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
     </div>
   </div>
   <!-- Modal de editar -->
@@ -130,7 +176,19 @@
       </div>
     </div>
   </div>
-  <table class="table table-dark table-striped text-center fw-bold table align-middle">
+  <div class="toast align-items-center text-light border-0 position-absolute top-0 bg-success end-0 m-4" role="alert"
+    aria-live="assertive" id="toastEdit" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
+    <div class="d-flex">
+      <div class="toast-body fw-bold">
+        Edição feita com sucesso
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+
+
+  <table class="table table-light table-striped text-center fw-bold table align-middle table-hover">
     <thead>
       <th>Nome</th>
       <th>Email</th>
@@ -144,12 +202,11 @@
   <footer>
     <ul class="nav justify-content-center bg-dark">
       <li class="nav-item">
-        <p class="text-secondary m-2 text-center">Create by: <br>Murilo Martins Mendonça ©2025</p>
+        <p class="text-secondary m-2 text-center">Created by: <br>Murilo Martins Mendonça &copy 2025</p>
       </li>
 
     </ul>
   </footer>
 </body>
 <script src="../JS/showTable.js"></script>
-
 </html>
