@@ -18,7 +18,8 @@ Um navegador de internet.
 Passos
 Clone este repositório ou baixe o código.
 Coloque os arquivos no diretório raiz do seu servidor local.
-Abra o navegador e acesse http://localhost/seu-projeto.
+Abra o navegador e acesse http://localhost/htdocs/proponto/www/index.php. (para XAMPP)
+Abra o navegador e acesse http://localhost/www/proponto/www/index.php. (para wamp)
 Pronto! Agora você pode cadastrar e gerenciar eventos.
 Contribuindo
 Sinta-se à vontade para fazer contribuições! Para isso, faça um fork do projeto e envie um pull request com suas melhorias.
