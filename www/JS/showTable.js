@@ -138,16 +138,13 @@ function showTable(search) {
   });
 }
 function showModalDelEdit(id, acao) {
-  console.log(acao);
 
   acao === "Cancel" ? modal_del.show() : modal_edit.show();
 
   $.ajax({
-    // Chama o arquivo que pega as informações
     url: "utilities/puxarInfo_usuario.php",
-    // Define o method
+  
     method: "post",
-    // Valores de "input"
     data: {
       id: id,
       acao: acao,
@@ -172,8 +169,6 @@ document.getElementById("form_del").addEventListener("submit", (event) => {
   event.preventDefault();
 
   let id = document.getElementById("id_usuarioCancel").value;
-
-  console.log(id);
 
   $.ajax({
     url: "utilities/deletarUsuario.php",
@@ -253,7 +248,7 @@ document.getElementById("form_edit").addEventListener("submit", (event) => {
         preco: preco,
       },
     }).done(function (data) {
-      console.log(data);
+
       showTable("searchbar");
       clear_form_edit();
       modal_edit.hide();
@@ -299,7 +294,7 @@ document.getElementById("form_add").addEventListener("submit", (event) => {
         preco: preco,
       },
     }).done(function (data) {
-      console.log(data);
+
       if (!data.includes("success")) {
         clear_form_add({
           name: data.includes("nome cadastrado"),
