@@ -4,8 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../CSS/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -21,23 +24,54 @@
 
   <div class=" w-100 d-flex justify-content-around align-center bg-light">
 
-    <!-- filter -->
+    <!-- filters -->
     <div class="input-group w-25 p-3 bg-light">
-      <select class="form-select fw-bold" id='column' aria-label="Default select example"
+      <select class="form-select fw-bold" id='tipos' aria-label="Default select example"
         oninput="showTable('searchbar')">
-        <option value="name" class="fw-bold" selected>Nome</option>
-        <option value="email" class="fw-bold">Email</option>
-        <option value="telefone" class="fw-bold">Telefone</option>
+        <option selected value="todos">Todos</option>
+        <option value="Social">Social</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Esportivo">Esportivo</option>
+        <option value="Corporativo">Corporativo</option>
+        <option value="Religioso">Religioso</option>
+        <option value="Entreterimento">Entreterimento</option>
+        <option value="Outro">Outro</option>
       </select>
+    </div>
+
+    <!-- Data -->
+    <div class="input-container">
+      <label for="de" class="text-black fw-bold">De:</label>
+      <input type="date" id="de" onchange="showTable('searchbar')">
+      <label for="ate" class="text-black fw-bold">Até:</label>
+      <input type="date" id="ate" onchange="showTable('searchbar')">
     </div>
 
     <!-- Search -->
     <div class="input-group w-25 p-3 fw-bold ">
-      <input class="form-control" type="text" placeholder="Pesquisar..." id='searchbar'
+      <select class="form-select fw-bold " id='column' aria-label="Default select example"
+        oninput="showTable('searchbar')">
+        <option value="nome_evento">Nome</option>
+        <option value="endereco_evento">Endereço</option>
+      </select>
+      <input class="form-control w-50" type="text" placeholder="Pesquisar..." id='searchbar'
         aria-label="default input example" oninput="showTable('searchbar')" value="">
       <span class="input-group-text" id="inputGroup-sizing-default">
         <i class="bi bi-search"></i>
       </span>
+    </div>
+
+    <!-- Preco -->
+    <div class="input-container w-25 p-3">
+      <div class="input-group flex-nowrap ">
+        <span class="input-group-text">R$</span>
+          <input type="number" class="form-control" id="dePreco" placeholder="De:" oninput="showTable('searchbar')"> 
+      </div>
+      <div class="input-group flex-nowrap">
+      <span class="input-group-text">R$</span>
+          <input type="number" class="form-control" id="atePreco" placeholder="Até:" oninput="showTable('searchbar')">
+          
+        </div>
     </div>
 
     <!-- Cadastrar -->
@@ -52,39 +86,130 @@
   </div>
 
   <!-- Modal de Cadastrar -->
-  <div class="modal fade" id="modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    data-bs-theme="dark">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal fade modal-xl" id="modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Usuario</h1>
-          <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Novo Evento</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="clear_form()"></button>
         </div>
         <form id="form_add" class="needs-validation" novalidate>
           <div class="modal-body">
             <div class="row">
               <div class="col">
-                <div class="mb-3 w-100">
-                  <label for="nome" class="col-form-label fw-bold">Nome:</label>
-                  <input type="text" class="form-control " id="nome" required>
+                <small class="form-text align-start mb-1">
+                  Tipo do evento:
+                </small>
+              </div>
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Nome do evento:
+                </small>
+              </div>
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Descrição do evento:
+                </small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <select class="form-select" id='tipo' aria-label="Default select example" required>
+                  <option selected disabled hidden value="">Choose...</option>
+                  <option value="Social">Social</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Esportivo">Esportivo</option>
+                  <option value="Corporativo">Corporativo</option>
+                  <option value="Religioso">Religioso</option>
+                  <option value="Entreterimento">Entreterimento</option>
+                  <option value="Outro">Outro</option>
+                </select>
+
+              </div>
+              <div class="col">
+                <input class="form-control" type="text" id="nome" required>
+                <div class="invalid-feedback">
+                  Insira um nome.
                 </div>
               </div>
               <div class="col">
-                <div class="mb-3">
-                  <label for="email" class="col-form-label fw-bold">Email:</label>
-                  <input type="email" class="form-control" id="email" required>
+                <input class="form-control" type="text" id="desc" required>
+                <div class="invalid-feedback">
+                  Insira uma Descrição
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Endereço do evento:
+                </small>
+              </div>
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Link do Endereço:
+                </small>
+              </div>
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Data:
+                </small>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col">
+                <input class="form-control" type="text" id="endereco" required>
+                <div class="invalid-feedback">
+                  Insira um endereço.
+                </div>
+
+              </div>
+              <div class="col">
+                <input class="form-control" type="text" id="linkEnde" required>
+                <div class="invalid-feedback">
+                  Insira um link do endereço.
                 </div>
               </div>
               <div class="col">
-                <div class="mb-3">
-                  <label for="tel" class="col-form-label fw-bold">Telefone:</label>
-                  <input type="text" class="form-control tel" id="tel" placeholder="(XX)XXXXX-XXXX" required>
+                <input class="form-control" type="date" id="date" onload="definirDataMinima()" required>
+                <div class="invalid-feedback">
+                  Insira a data inicial
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Hora inicial do evento:
+                </small>
+              </div>
+              <div class="col">
+                <small class="form-text align-start mb-1">
+                  Preço :
+                </small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input class="form-control" type="text" id="horaInicial" onblur="validarHora(this)" required>
+                <div class="invalid-feedback">
+                  Insira uma hora inicial.
+                </div>
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" id="preco" required>
+                <div class="invalid-feedback">
+                  Insira um preço.
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-warning">Salvar</button>
           </div>
         </form>
       </div>
@@ -99,18 +224,20 @@
           aria-label="Close"></button>
       </div>
     </div>
-  </div>
-  <div class="toast align-items-center text-light bg-danger border-0 position-absolute top-0 bg-success end-0 m-4"
-    role="alert" aria-live="assertive" id="toastDanger" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
-    <div class="d-flex">
-      <div class="toast-body fw-bold">
-        Complete todos os inputs
+    <div class="toast align-items-center text-light bg-danger border-0 position-absolute top-0 bg-success end-0 m-4"
+      role="alert" aria-live="assertive" id="toastDanger" aria-atomic="true" data-bs-delay='2000'
+      data-bs-autohide="true">
+      <div class="d-flex">
+        <div class="toast-body fw-bold">
+          Complete todos os inputs
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-        aria-label="Close"></button>
     </div>
   </div>
   </div>
+
 
   <div class="toast align-items-center text-light border-0 position-absolute top-0 bg-success end-0 m-4" role="alert"
     aria-live="assertive" id="toastSuccess" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
@@ -123,8 +250,6 @@
     </div>
   </div>
   </div>
-
-
 
   <!-- Modal de deletar -->
   <div class="modal fade" id="modal_del" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -175,6 +300,16 @@
         </form>
       </div>
     </div>
+    <div class="toast align-items-center text-light border-0 position-absolute top-0 bg-primary end-0 m-4" role="alert"
+      aria-live="assertive" id="toastHora" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
+      <div class="d-flex">
+        <div class="toast-body fw-bold">
+          Por favor coloque no formato hh:mm
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
   </div>
   <div class="toast align-items-center text-light border-0 position-absolute top-0 bg-success end-0 m-4" role="alert"
     aria-live="assertive" id="toastEdit" aria-atomic="true" data-bs-delay='2000' data-bs-autohide="true">
@@ -185,14 +320,19 @@
       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
         aria-label="Close"></button>
     </div>
+
   </div>
 
 
   <table class="table table-light table-striped text-center fw-bold table align-middle table-hover">
     <thead>
+      <th>Tipo</th>
       <th>Nome</th>
-      <th>Email</th>
-      <th>Telefone</th>
+      <th>Descrição</th>
+      <th>Endereço</th>
+      <th>Link do Endereço</th>
+      <th>Data e hora inicial</th>
+      <th>Preço</th>
       <th>Ações</th>
     </thead>
     <tbody id="table">
@@ -209,4 +349,5 @@
   </footer>
 </body>
 <script src="../JS/showTable.js"></script>
+
 </html>

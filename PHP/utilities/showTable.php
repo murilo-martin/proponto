@@ -3,19 +3,29 @@
   include "mysqlconecta.php";
 
   $search = $_POST["search"];
+
+  $tipo = $_POST["tipo"];
   $column = $_POST["column"];
+  $date = $_POST["date"];
+  $preco = $_POST["preco"];
 
-  function fixPhone($tel){
+  function combinarDataHora($data, $hora) {
 
-    $DDD = substr($tel,0,2);
-    $num = substr($tel,2, 5);
-    $ber = substr($tel,7, 4);
-    
-    return "($DDD) $num-$ber" ;
+    $dataHoraString = $data . ' ' . $hora ;
 
-  }
+    $timestamp = strtotime($dataHoraString);
 
-  $query = mysqli_query($conexao,"SELECT * from usuario where $column LIKE '%$search%' ");
+    if ($timestamp === false) {
+        return "Formato de data ou hora inválido.";
+    }
+
+    return date('d/m/Y H:i', $timestamp);
+}
+function fixMoney($value){
+  return str_replace(".", ",", sprintf("%1$.2f", $value));
+}
+
+  $query = mysqli_query($conexao,"SELECT * from eventos where $column LIKE '%$search%' $tipo $date $preco ORDER BY nome_evento");
 
   while($row = mysqli_fetch_array($query)) {
   
@@ -28,8 +38,24 @@
     echo "$row[2]";
     echo  "</td>";
     
-    echo "<td class=' vertical-alig'>";
-    echo fixPhone($row[3]) ;
+    echo  "<td class=' vertical-alig'>";
+    echo  "$row[3]" ;
+    echo  "</td>";
+
+    echo  "<td class=' vertical-alig'>";
+    echo  "$row[4]" ;
+    echo  "</td>";
+
+    echo  "<td class=' vertical-alig'>";
+    echo  "<a href='$row[5]'>Clique aqui para ver no maps</a>" ;
+    echo  "</td>";
+
+    echo  "<td class=' vertical-alig'>";
+    echo  combinarDataHora($row[7],$row[8]);
+    echo  "</td>";
+    
+    echo  "<td class=' vertical-alig'>";
+    echo  "R$ ", fixMoney($row[6]);
     echo  "</td>";
 
     echo "<td class='d-flex justify-content-evenly align-center w-100' >";

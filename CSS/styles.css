@@ -15,37 +15,35 @@ body{
     background-color: whitesmoke;
 
 }
-#link img{
-
-    filter: grayscale(1);
-    transition: 300ms;
-    height: 2em;
-    width: 2em;
-
-}
-#link img:hover{
-
-    filter: grayscale(0);
-    transition: 300ms;
-
-}
-#insta img{
-
-    filter: grayscale(1);
-    transition: 300ms;
-    height: 2em;
-    width: 2em;
-
-
-}
-#insta img:hover{
-
-    filter: grayscale(0);
-    transition: 300ms;
-
-}
 footer{
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+.input-container {
+
+    display: flex;
+    flex-direction: row;
+    column-gap: .2em;
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+input[type="date"] {
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #ffffff; /* Cor da borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: border-color 0.3s; /* Transição suave para a cor da borda */
+}
+
+input[type="date"]:focus {
+    border-color: blue; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; 
 }
